@@ -1,0 +1,41 @@
+name: doc_scanner_kit
+description: "A Flutter plugin for document scanning on Android and iOS using ML Kit's Document Scanner API and VisionKit. It enables real-time edge detection, auto-cropping, and high-quality image output. Ideal for building mobile scanning solutions."
+version: 0.0.1
+homepage: https://github.com/Quintessential-Maker/doc_scanner_kit/
+repository: https://github.com/Quintessential-Maker/doc_scanner_kit/
+issue_tracker: https://github.com/Quintessential-Maker/doc_scanner_kit/issues
+
+environment:
+  sdk: '>=2.18.0 <4.0.0'
+#  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  plugin_platform_interface: ^2.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.quintessential.doc_scanner_kit
+        pluginClass: DocumentScannerPlugin
+      ios:
+        pluginClass: SwiftDocumentScannerPlugin
+      linux:
+        pluginClass: DocumentScannerPlugin
+      macos:
+        pluginClass: DocumentScannerPlugin
+      windows:
+        pluginClass: DocumentScannerPluginCApi
+      web:
+        pluginClass: DocumentScannerWeb
+        fileName: doc_scanner_kit_web.dart
