@@ -24,19 +24,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   dynamic _scannedDocuments;
-  int _currentIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-    // Switch case for handling different actions
-    switch (index) {
-      case 0:
-        scanDocument();
-        break;
-    }
-  }
 
   Future<void> scanDocument() async {
     dynamic scannedDocuments;
@@ -108,35 +95,66 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Document Scanner Kit',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Document Scanner'),
-        ),
-        body: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _scannedDocuments != null
-                    ? Text(_scannedDocuments.toString())
-                    : const Text("No Documents Scanned"),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Document Scanner Kit'),
+      ),
+      body: Stack(
+        children: [
+          // Center the main content vertically
+          Center(
+            child: _scannedDocuments != null
+                ? Text(_scannedDocuments.toString())
+                : const Text("No Documents Scanned"),
+          ),
 
-              ],
+          // Align the button at the bottom center
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20), // Add some bottom padding
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Colors.deepOrange,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(50),
+                    ),
+                  ),
+                ),
+                onPressed: scanDocument,
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 4),
+                      child: Icon(
+                        Icons.scanner,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Flexible(
+                      child: FittedBox(
+                        child: Text(
+                          'Scan',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: _onItemTapped,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.scanner),
-              label: 'Scan', backgroundColor: Colors.black54,
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }
