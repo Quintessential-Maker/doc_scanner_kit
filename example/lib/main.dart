@@ -35,17 +35,9 @@ class _MyAppState extends State<MyApp> {
       case 0:
         scanDocument();
         break;
-      case 1:
-        scanDocumentAsImages();
-        break;
-      case 2:
-        scanDocumentAsPdf();
-        break;
-      case 3:
-        scanDocumentUri();
-        break;
     }
   }
+
   Future<void> scanDocument() async {
     dynamic scannedDocuments;
     try {
@@ -114,63 +106,10 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-
-  Future<void> scanDocumentAsImages() async {
-    dynamic scannedDocuments;
-    try {
-      scannedDocuments = await DocumentScanner().getScannedDocumentAsImages(page: 4) ??
-              'Unknown platform documents';
-    } on PlatformException {
-      scannedDocuments = 'Failed to get scanned documents.';
-    }
-    print(scannedDocuments.toString());
-    if (!mounted) return;
-    setState(() {
-      _scannedDocuments = scannedDocuments;
-    });
-    await Share.shareXFiles([scannedDocuments.path], text: 'Here is my inspection XML request!');
-  }
-
-  Future<void> scanDocumentAsPdf() async {
-    dynamic scannedDocuments;
-    try {
-      scannedDocuments = await DocumentScanner().getScannedDocumentAsPdf(page: 4) ?? 'Unknown platform documents';
-    } on PlatformException {
-      scannedDocuments = 'Failed to get scanned documents.';
-    }
-    print(scannedDocuments.toString());
-
-    if (!mounted) return;
-    setState(() {
-      _scannedDocuments = scannedDocuments;
-    });
-    await Share.shareXFiles(
-        [scannedDocuments.path], text: 'Here is my inspection XML request!');
-  }
-
-  Future<void> scanDocumentUri() async {
-    //This Feature only supported for Android.
-    dynamic scannedDocuments;
-    try {
-      scannedDocuments =
-          await DocumentScanner().getScanDocumentsUri(page: 4) ??
-              'Unknown platform documents';
-    } on PlatformException {
-      scannedDocuments = 'Failed to get scanned documents.';
-    }
-    print(scannedDocuments.toString());
-    if (!mounted) return;
-    setState(() {
-      _scannedDocuments = scannedDocuments;
-    });
-    await Share.shareXFiles(
-        [scannedDocuments.path], text: 'Here is my inspection XML request!');
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Document Scanner',
+      title: 'Document Scanner Kit',
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Document Scanner'),
@@ -195,18 +134,6 @@ class _MyAppState extends State<MyApp> {
             BottomNavigationBarItem(
               icon: Icon(Icons.scanner),
               label: 'Scan', backgroundColor: Colors.black54,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.image),
-              label: 'Images', backgroundColor: Colors.black54,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.picture_as_pdf),
-              label: 'PDF', backgroundColor: Colors.black54,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.link),
-              label: 'URI', backgroundColor: Colors.black54,
             ),
           ],
         ),
