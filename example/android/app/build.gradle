@@ -25,7 +25,7 @@ if (flutterVersionName == null) {
 android {
     namespace "com.quintessential.doc_scanner_kit"
     compileSdk 34
-    ndkVersion flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -66,4 +66,8 @@ flutter {
 
 dependencies {
     implementation 'com.google.android.gms:play-services-mlkit-document-scanner:16.0.0-beta1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.20"
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
