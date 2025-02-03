@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'doc_scanner_kit'
-  s.version          = '0.0.3'
+  s.version          = '0.0.4'
   s.summary          = 'A document scanner kit for iOS in Flutter.'
   s.description      = <<-DESC
 This Flutter plugin provides a document scanning capability using advanced image processing techniques.
