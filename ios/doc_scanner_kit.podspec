@@ -7,7 +7,7 @@ This Flutter plugin provides a document scanning capability using advanced image
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :type => 'MIT', :file => '../LICENSE' }
-  s.authors          = { 'Your Name' => 'developer.pallii09@gmail.com' }
+  s.authors          = { 'Pallavi Sharma' => 'developer.pallii09@gmail.com' }
   s.source           = { :git => 'https://github.com/Quintessential-Maker/doc_scanner_kit.git', :tag => s.version.to_s }
   s.source_files     = 'Classes/**/*'
   s.dependency 'Flutter'
