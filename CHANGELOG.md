@@ -1,4 +1,4 @@
-## 0.0.1
+## 0.0.7
 - Initial release of the `doc_scanner_kit` plugin.
 - Added support for document scanning on Android using ML Kit Document Scanner API.
 - Added support for document scanning on iOS using VisionKit.
