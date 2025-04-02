@@ -266,7 +266,6 @@ class DocumentScannerPlugin : MethodCallHandler, ActivityResultListener,
         messenger: BinaryMessenger,
         applicationContext: Application?,
         activity: Activity,
-        registrar: Registrar?,
         activityBinding: ActivityPluginBinding?
     ) {
         this.activity = activity
@@ -282,7 +281,6 @@ class DocumentScannerPlugin : MethodCallHandler, ActivityResultListener,
             pluginBinding!!.binaryMessenger,
             pluginBinding!!.applicationContext as Application,
             activityBinding!!.activity,
-            null,
             activityBinding
         )
     }
