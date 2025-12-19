@@ -14,6 +14,7 @@ Check out the `example` directory for a sample Flutter app using `doc_scanner_ki
 
 ## Features
 
+### Document Scanning
 - High-quality and consistent user interface for digitizing physical documents.
 - Accurate document detection with precise corner and edge detection for optimal scanning results.
 - Flexible functionality allows users to crop scanned documents, apply filters, remove fingers, remove stains and other blemishes.
@@ -21,6 +22,16 @@ Check out the `example` directory for a sample Flutter app using `doc_scanner_ki
 - Support for sending digitized files in PDF and JPEG formats back to your app.
 - Ability to set a scan page limit.
 - Support for image(png,jpeg) format and PDF has been added through various methods.
+
+### PDF Editing (NEW!)
+- **Add Annotations**: Add text, highlights, underlines, and other annotations to PDFs
+- **Merge PDFs**: Combine multiple PDF documents into one
+- **Split PDFs**: Split a single PDF into multiple files
+- **Extract Pages**: Extract specific pages from a PDF
+- **Rotate Pages**: Rotate individual pages in a PDF (90°, 180°, 270°)
+- **Compress PDFs**: Reduce file size while maintaining quality
+- **PDF Information**: Get detailed information about PDF files
+- **Custom Annotations**: Support for various annotation types including freehand drawing, shapes, and stamps
 
 
 ## Installation
@@ -54,6 +65,177 @@ Use the following function for document scanning on Android and iOS:
 }
 ```
 **Note-: If you want to obtain only a PDF scanned document, call getScannedDocumentAsPdf(). Similarly, if you want to get a scanned document in image format, use getScannedDocumentAsImages().**
+
+## PDF Editing Usage
+
+### Adding Annotations to PDFs
+
+```dart
+import 'package:doc_scanner_kit/models/pdf_edit_options.dart';
+
+// Add text annotation
+final textAnnotation = PdfAnnotation(
+  id: 'text_1',
+  type: PdfAnnotationType.text,
+  pageNumber: 1,
+  position: PdfAnnotationPosition(x: 100, y: 100, width: 200, height: 50),
+  text: 'Sample Text',
+  color: PdfColor.red,
+  fontSize: 16,
+);
+
+final result = await DocumentScanner().addAnnotationsToPdf(
+  pdfPath: '/path/to/your/pdf',
+  annotations: [textAnnotation],
+);
+
+if (result.success) {
+  print('Annotation added successfully!');
+  print('Output path: ${result.outputPath}');
+}
+```
+
+### Merging PDFs
+
+```dart
+final result = await DocumentScanner().mergePdfs(
+  pdfPaths: ['/path/to/pdf1.pdf', '/path/to/pdf2.pdf'],
+  outputPath: '/path/to/merged.pdf',
+);
+
+if (result.success) {
+  print('PDFs merged successfully!');
+}
+```
+
+### Splitting PDFs
+
+```dart
+final results = await DocumentScanner().splitPdf(
+  pdfPath: '/path/to/large.pdf',
+  pageRanges: [1, 2, 3], // Split into individual pages
+  outputDirectory: '/path/to/output/',
+);
+
+for (final result in results) {
+  if (result.success) {
+    print('Split successful: ${result.outputPath}');
+  }
+}
+```
+
+### Extracting Pages
+
+```dart
+final result = await DocumentScanner().extractPagesFromPdf(
+  pdfPath: '/path/to/source.pdf',
+  pageNumbers: [1, 3, 5], // Extract pages 1, 3, and 5
+  outputPath: '/path/to/extracted.pdf',
+);
+```
+
+### Rotating Pages
+
+```dart
+final result = await DocumentScanner().rotatePdfPages(
+  pdfPath: '/path/to/pdf',
+  pageRotations: {
+    1: 90,   // Rotate page 1 by 90 degrees
+    2: 180,  // Rotate page 2 by 180 degrees
+  },
+  outputPath: '/path/to/rotated.pdf',
+);
+```
+
+### Compressing PDFs
+
+```dart
+final result = await DocumentScanner().compressPdf(
+  pdfPath: '/path/to/large.pdf',
+  quality: 80, // Quality from 1-100
+  outputPath: '/path/to/compressed.pdf',
+);
+```
+
+### Getting PDF Information
+
+```dart
+final info = await DocumentScanner().getPdfInfo(
+  pdfPath: '/path/to/pdf',
+);
+
+print('Page count: ${info['pageCount']}');
+print('File size: ${info['fileSize']}');
+print('Title: ${info['title']}');
+```
+
+### Advanced PDF Editing
+
+```dart
+// Create comprehensive edit options
+final editOptions = PdfEditOptions(
+  outputPath: '/path/to/edited.pdf',
+  preserveOriginal: true,
+  annotations: [
+    PdfAnnotation(
+      id: 'highlight_1',
+      type: PdfAnnotationType.highlight,
+      pageNumber: 1,
+      position: PdfAnnotationPosition(x: 50, y: 200, width: 300, height: 20),
+      color: PdfColor.yellow,
+    ),
+    PdfAnnotation(
+      id: 'text_1',
+      type: PdfAnnotationType.text,
+      pageNumber: 1,
+      position: PdfAnnotationPosition(x: 100, y: 100, width: 200, height: 50),
+      text: 'Important Note',
+      color: PdfColor.red,
+      fontSize: 14,
+    ),
+  ],
+  compressOutput: true,
+  quality: 85,
+);
+
+final result = await DocumentScanner().editPdf(
+  pdfPath: '/path/to/source.pdf',
+  options: editOptions,
+);
+```
+
+### Annotation Types
+
+The plugin supports various annotation types:
+
+- `PdfAnnotationType.text` - Text annotations
+- `PdfAnnotationType.highlight` - Highlight text
+- `PdfAnnotationType.underline` - Underline text
+- `PdfAnnotationType.strikethrough` - Strikethrough text
+- `PdfAnnotationType.freehand` - Freehand drawing
+- `PdfAnnotationType.rectangle` - Rectangle shapes
+- `PdfAnnotationType.circle` - Circle shapes
+- `PdfAnnotationType.arrow` - Arrow annotations
+- `PdfAnnotationType.stamp` - Stamp annotations
+
+### Color Support
+
+```dart
+// Predefined colors
+PdfColor.red
+PdfColor.green
+PdfColor.blue
+PdfColor.yellow
+PdfColor.black
+PdfColor.white
+
+// Custom RGB colors
+PdfColor.fromRgb(255, 128, 0) // Orange
+
+// Hex colors
+PdfColor.fromHex('#FF5733')
+PdfColor.fromHex('FF5733')
+```
 
 
 ## Project Setup
